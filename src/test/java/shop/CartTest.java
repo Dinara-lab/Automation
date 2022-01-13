@@ -1,21 +1,20 @@
 package shop;
 
 import com.github.javafaker.Faker;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CartTest {
 
     private static Faker faker;
+    private static Random random;
 
     @BeforeAll
     static void generateName(){
         faker = new Faker();
+        random = new Random();
         System.out.println("before all");
     }
 
@@ -28,11 +27,18 @@ class CartTest {
     }
 
     @Test
-    void testAddRealItem(){
+    void testGetTotalPrice(){
+        double TAX = 0.2;
         RealItem realItem = new RealItem();
-        Cart cart = new Cart("");
+        double price = random.nextDouble();
+
+        realItem.setPrice(price);
+        Cart cart = new Cart(faker.name().fullName());
         cart.addRealItem(realItem);
-        assertTrue(cart.getRealItems().contains(realItem), "the item is not in the list");
-        System.out.println("test2");
+
+        double totalPrice = price + price * TAX;
+        assertEquals(totalPrice, cart.getTotalPrice(), "price is different");
+
+
     }
 }
