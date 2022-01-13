@@ -5,31 +5,45 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import shop.Cart;
-import java.io.FileWriter;
-import java.io.IOException;
+
+import java.io.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class JsonParserTest {
     private static Faker faker;
+    private static String object;
+    private static Gson gson;
+    private static Cart cart;
 
     @BeforeAll
-    static void generateName(){
+    static void beforeAll(){
         faker = new Faker();
         System.out.println("before all");
+        String name = faker.name().fullName();
+        cart = new Cart(name);
+        gson = new Gson();
+        object = gson.toJson(cart);
     }
 
     @Test
-    public void writeToFile(){
-        String name = faker.name().fullName();
-        Cart cart = new Cart(name);
-        Gson gson = new Gson();
-        String object = gson.toJson(cart);
-        Cart newCart = gson.fromJson(object, Cart.class);
+    public void writeToFile() throws IOException {
+
+        try (FileWriter writer = new FileWriter("src/main/resources/" + cart.getCartName() + ".json")) {
+            writer.write(object);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/" + cart.getCartName() + ".json"));
+        Cart newCart = gson.fromJson(reader.readLine(), Cart.class);
+
         assertAll(()-> assertEquals(cart.getCartName(), newCart.getCartName(), "object' names are not the same"),
                   () -> assertEquals(cart.getRealItems(), newCart.getRealItems(), "items are not the same"),
                   () ->  assertEquals(cart.getTotalPrice(), newCart.getTotalPrice(), "price is not the same"));
 
 
 
-    }
+
+}
 }
