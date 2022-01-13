@@ -15,11 +15,11 @@ class JsonParserTest {
     @BeforeAll
     static void beforeAll(){
         Faker faker = new Faker();
-        System.out.println("before all");
         String name = faker.name().fullName();
         cart = new Cart(name);
         JsonParser jsonParser = new JsonParser();
         jsonParser.writeToFile(cart);
+
 
     }
     @Test
@@ -45,6 +45,7 @@ class JsonParserTest {
 }
 
     @Test
+    //@Disabled
     public void readFromFile(){
         File file = new File("src/main/resources/" + cart.getCartName() + ".json");
         JsonParser jsonParser = new JsonParser();
@@ -62,9 +63,13 @@ class JsonParserTest {
 
    @AfterAll
    static void removeFile(){
+
        File file = new File("src/main/resources/" + cart.getCartName() + ".json");
        String name = file.getName();
-       file.delete();
+
+       if (file.exists()){
+           file.delete();
+       }
        System.out.println("file with the name " + name + "was deleted");
    }
 }
