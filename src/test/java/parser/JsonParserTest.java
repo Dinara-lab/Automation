@@ -55,9 +55,6 @@ class JsonParserTest {
         assertAll(()-> assertEquals(newCartObject.getCartName(), cart.getCartName(), "object' names are not the same"),
                   () ->  assertEquals(newCartObject.getTotalPrice(), cart.getTotalPrice(), "price is not the same"));
 
-        System.out.println(file.getName());
-
-
 
 }
    @Test
@@ -89,12 +86,9 @@ class JsonParserTest {
    static void removeFile(){
 
        File file = new File("src/main/resources/" + cart.getCartName() + ".json");
-       String name = file.getName();
 
        if (file.exists()){
-           Boolean var = file.delete();
-           System.out.println("file with the name " + name + "was deleted");
-           System.out.println(var);
+            file.delete();
        }
 
    }
