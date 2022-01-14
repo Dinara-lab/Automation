@@ -1,12 +1,13 @@
 package shop;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RealItemTest {
+public class RealItemTest {
 
      private static Random random;
 
@@ -14,10 +15,10 @@ class RealItemTest {
     @BeforeAll
     static void generateRandomNumber(){
         random = new Random();
-        System.out.println("before all");
     }
 
     @Test
+    @Tag("fast")
     void getWeight() {
 
         double var = random.nextDouble();

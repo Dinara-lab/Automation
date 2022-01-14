@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class JsonParserTest {
+public class JsonParserTest {
 
     private static Cart cart;
 
@@ -25,6 +25,7 @@ class JsonParserTest {
 
     }
     @Test
+    @Tag("fast")
     void testIfExists(){
         File file = new File("src/main/resources/" + cart.getCartName() + ".json");
         assertTrue(file.exists(), "file does not exist");
@@ -32,6 +33,7 @@ class JsonParserTest {
 
 
     @Test
+    @Tag("slow")
     public void writeToFile() throws IOException {
 
         Gson gson = new Gson();
@@ -47,6 +49,7 @@ class JsonParserTest {
 }
 
     @Test
+    @Tag("slow")
     public void readFromFile(){
         File file = new File("src/main/resources/" + cart.getCartName() + ".json");
         JsonParser jsonParser = new JsonParser();
@@ -55,10 +58,10 @@ class JsonParserTest {
         assertAll(()-> assertEquals(newCartObject.getCartName(), cart.getCartName(), "object' names are not the same"),
                   () ->  assertEquals(newCartObject.getTotalPrice(), cart.getTotalPrice(), "price is not the same"));
 
-
 }
    @Test
    @Disabled
+   @Tag("exception")
    public void exceptionTest(){
 
         JsonParser jsonParser = new JsonParser();
@@ -79,7 +82,6 @@ class JsonParserTest {
        for (File f: list) {
            assertThrows(Exception.class, ()-> jsonParser.readFromFile(f));
        }
-
     }
 
    @AfterAll

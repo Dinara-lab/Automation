@@ -6,7 +6,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CartTest {
+public class CartTest {
 
     private static Faker faker;
     private static Random random;
@@ -15,18 +15,18 @@ class CartTest {
     static void generateName(){
         faker = new Faker();
         random = new Random();
-        System.out.println("before all");
     }
 
    @Test
+   @Tag("fast")
     void testGetCartName() {
         String name = faker.name().fullName();
         Cart cart = new Cart(name);
         assertEquals(name, cart.getCartName(), "names are not equal");
-        System.out.println("test1");
     }
 
     @Test
+    @Tag("fast")
     void testGetTotalPrice(){
         double TAX = 0.2;
         RealItem realItem = new RealItem();
