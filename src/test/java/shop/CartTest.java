@@ -39,6 +39,5 @@ class CartTest {
         double totalPrice = price + price * TAX;
         assertEquals(totalPrice, cart.getTotalPrice(), "price is different");
 
-
     }
 }
